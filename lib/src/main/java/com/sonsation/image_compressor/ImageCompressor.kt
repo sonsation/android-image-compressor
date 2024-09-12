@@ -18,16 +18,6 @@ class ImageCompressor(private val context: Context) {
         Compression(context)
     }
 
-    fun setSaveDirectory(path: String): ImageCompressor {
-        compression.saveDirectory = path
-        return this
-    }
-
-    fun setSaveDirectory(file: File): ImageCompressor {
-        compression.saveDirectory = file.absolutePath
-        return this
-    }
-
     fun setImage(path: String): ImageCompressor {
         compression.input = path
         return this
@@ -79,10 +69,22 @@ class ImageCompressor(private val context: Context) {
     }
 
     fun getBitmapImage(): Bitmap {
-        return compression.getCompressedImage().toBitmap()
+        return compression.compressImage().use {
+            it.toBitmap()
+        }
     }
 
     fun getFile(): File {
-        return compression.getCompressedImage()
+        return compression.compressImage()
+    }
+
+    fun save(path: String) {
+        compression.saveDirectory = path
+        compression.compressImage()
+    }
+
+    fun save(file: File) {
+        compression.saveDirectory = file.absolutePath
+        compression.compressImage()
     }
 }

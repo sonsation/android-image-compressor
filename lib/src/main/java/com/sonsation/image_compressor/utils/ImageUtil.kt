@@ -30,12 +30,12 @@ object ImageUtil {
 
         val dirFile = File(path)
 
-        if (dirFile.isFile) {
-            throw IllegalArgumentException("path is file")
+        if (!dirFile.exists()) {
+            dirFile.mkdirs()
         }
 
-        if (dirFile.exists()) {
-            dirFile.mkdirs()
+        if (dirFile.isFile) {
+            throw IllegalArgumentException("path is file")
         }
 
         val destFile = File(path, "${System.currentTimeMillis()}")
@@ -47,12 +47,12 @@ object ImageUtil {
 
         val dirFile = File(path)
 
-        if (dirFile.isFile) {
-            throw IllegalArgumentException("path is file")
+        if (!dirFile.exists()) {
+            dirFile.mkdirs()
         }
 
-        if (dirFile.exists()) {
-            dirFile.mkdirs()
+        if (dirFile.isFile) {
+            throw IllegalArgumentException("path is file")
         }
 
         val file = File(path, "${System.currentTimeMillis()}")
@@ -70,12 +70,12 @@ object ImageUtil {
 
         val dirFile = File(path)
 
-        if (dirFile.isFile) {
-            throw IllegalArgumentException("path is file")
+        if (!dirFile.exists()) {
+            dirFile.mkdirs()
         }
 
-        if (dirFile.exists()) {
-            dirFile.mkdirs()
+        if (dirFile.isFile) {
+            throw IllegalArgumentException("path is file")
         }
 
         val inputStream = context.contentResolver.openInputStream(this) ?: throw NullPointerException("inputStream is null")

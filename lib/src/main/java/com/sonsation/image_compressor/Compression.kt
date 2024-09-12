@@ -24,11 +24,11 @@ class Compression(val context: Context) {
     val constraints by lazy {
         mutableListOf<Constraint>()
     }
-    var saveDirectory: String = context.cacheDir.absolutePath
+    var saveDirectory: String = "${context.cacheDir.absolutePath}/compressed_images"
 
     var input: Any? = null
 
-    fun getCompressedImage(): File {
+    fun compressImage(): File {
 
         val imageFile = getInputFile()
 
