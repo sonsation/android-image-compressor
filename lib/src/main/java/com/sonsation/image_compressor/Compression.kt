@@ -16,7 +16,7 @@ import java.io.File
 
 class Compression(val context: Context) {
 
-    var format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+    var format: Bitmap.CompressFormat? = null
     var maxWidth = 0
     var maxHeight = 0
     var quality = 100
@@ -32,7 +32,9 @@ class Compression(val context: Context) {
 
         val imageFile = getInputFile()
 
-        format = imageFile.getImageFormat(context)
+        if (format == null) {
+            format = imageFile.getImageFormat(context)
+        }
 
         val sampledBitmap = if (maxWidth != 0 || maxHeight != 0) {
             val reqWidth = maxWidth.times(scale).toInt()
@@ -51,8 +53,18 @@ class Compression(val context: Context) {
             }
 
             bitmap.use {
-                it.toByteArray(format, quality)
+                it.toByteArray(format!!, quality)
             }.write(imageFile)
+
+            val extension = when (format!!) {
+                Bitmap.CompressFormat.PNG -> "png"
+                Bitmap.CompressFormat.JPEG -> "jpeg"
+                else -> "webp"
+            }
+
+            File("${imageFile.absolutePath}.${extension}").apply {
+                imageFile.renameTo(this)
+            }
         } catch (e: Exception) {
             Log.e("ImageCompressor", "Error while compressing image : ${e}")
             throw NullPointerException("Compressed image is null")
