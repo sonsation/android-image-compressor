@@ -26,7 +26,7 @@ object ImageUtil {
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
 
-    internal fun File.saveToDir(path: String): File {
+    internal fun File.saveToDir(imageName: String, path: String): File {
 
         val dirFile = File(path)
 
@@ -38,12 +38,12 @@ object ImageUtil {
             throw IllegalArgumentException("path is file")
         }
 
-        val destFile = File(path, "${System.currentTimeMillis()}")
+        val destFile = File(path, imageName)
 
         return this.copyTo(destFile, true)
     }
 
-    internal fun Bitmap.saveToDir(path: String): File {
+    internal fun Bitmap.saveToDir(imageName: String, path: String): File {
 
         val dirFile = File(path)
 
@@ -55,7 +55,7 @@ object ImageUtil {
             throw IllegalArgumentException("path is file")
         }
 
-        val file = File(path, "${System.currentTimeMillis()}")
+        val file = File(path, imageName)
         val outputStream = file.outputStream()
 
         outputStream.use {
@@ -66,7 +66,7 @@ object ImageUtil {
         return file
     }
 
-    internal fun Uri.saveToDir(context: Context, path: String): File {
+    internal fun Uri.saveToDir(context: Context, imageName: String, path: String): File {
 
         val dirFile = File(path)
 
@@ -79,7 +79,7 @@ object ImageUtil {
         }
 
         val inputStream = context.contentResolver.openInputStream(this) ?: throw NullPointerException("inputStream is null")
-        val file = File(path, "${System.currentTimeMillis()}")
+        val file = File(path, imageName)
 
         BufferedOutputStream(file.outputStream(), BUFFER_SIZE).use { output ->
             inputStream.use { input ->

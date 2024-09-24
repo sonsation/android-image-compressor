@@ -58,6 +58,11 @@ class ImageCompressor(private val context: Context) {
         return this
     }
 
+    fun setImageName(imageName: String): ImageCompressor {
+        compression.imageName = imageName
+        return this
+    }
+
     fun setScale(@Scale scale: Float): ImageCompressor {
         compression.scale = scale
         return this

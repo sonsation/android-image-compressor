@@ -13,6 +13,7 @@ import com.sonsation.image_compressor.utils.ImageUtil.toSampledBitmap
 import com.sonsation.image_compressor.utils.ImageUtil.use
 import com.sonsation.image_compressor.utils.ImageUtil.write
 import java.io.File
+import java.util.UUID
 
 class Compression(val context: Context) {
 
@@ -24,7 +25,11 @@ class Compression(val context: Context) {
     val constraints by lazy {
         mutableListOf<Constraint>()
     }
-    var saveDirectory: String = "${context.cacheDir.absolutePath}/compressed_images"
+    var imageName = ""
+        get() = field.ifEmpty {
+            UUID.randomUUID().toString().replace("-", "")
+        }
+    var saveDirectory = "${context.cacheDir.absolutePath}/compressed_images"
 
     var input: Any? = null
 
@@ -78,10 +83,10 @@ class Compression(val context: Context) {
         input ?: throw IllegalArgumentException("No image source provided")
 
         return when (input) {
-            is String -> File((input as String)).saveToDir(saveDirectory)
-            is File -> (input as File).saveToDir(saveDirectory)
-            is Bitmap -> (input as Bitmap).saveToDir(saveDirectory)
-            is Uri -> (input as Uri).saveToDir(context, saveDirectory)
+            is String -> File((input as String)).saveToDir(imageName, saveDirectory)
+            is File -> (input as File).saveToDir(imageName, saveDirectory)
+            is Bitmap -> (input as Bitmap).saveToDir(imageName, saveDirectory)
+            is Uri -> (input as Uri).saveToDir(context, imageName, saveDirectory)
             else -> throw IllegalArgumentException("Unsupported input type")
         }
     }
