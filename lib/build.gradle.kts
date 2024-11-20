@@ -32,7 +32,8 @@ android {
         jvmTarget = "17"
     }
     publishing {
-        singleVariant("release") {
+        multipleVariants {
+            allVariants()
             withSourcesJar()
             withJavadocJar()
         }
@@ -54,7 +55,6 @@ publishing {
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutine)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.exifinterface)
     testImplementation(libs.junit)
