@@ -4,22 +4,6 @@
 
 A lightweight and efficient image compression library for Android. It allows you to easily compress images while customizing properties like quality, scale, and resolution. It supports various input types such as `String`, `File`, `Bitmap`, and `Uri`.
 
-Add it to your build.gradle with:
-```gradle
-allprojects {
-    repositories {
-        maven { url "https://jitpack.io" }
-    }
-}
-```
-and:
-
-```gradle
-dependencies {
-    compile 'com.github.sonsation:image-compressor:1.0.0'
-}
-```
-
 ## Features
 
 - Compress images with customizable quality and scale
@@ -31,6 +15,14 @@ dependencies {
 ## Installation
 
 ### Gradle Dependency
+
+```gradle
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+```
 
 ```gradle
 dependencies {
